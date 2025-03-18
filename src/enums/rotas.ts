@@ -1,3 +1,4 @@
+const RotaAdmin = '/admin'
 export enum Rotas {
     HOME = '/home',
     ITENS_PERDIDOS = '/itens-perdidos',
@@ -9,5 +10,8 @@ export enum Rotas {
     TOP10_MAIS_PERDIDO_SEMANA = '/top10/semana',
     TOP10_MAIS_PERDIDO_MES = '/top10/mes',
 
-    CADASTRO = '/cadastro/item-perdido',
+    CADASTRO_ITENS = '/cadastro/item-perdido',
+
+    CADASTRO_USUARIO = RotaAdmin + '/cadastros/usuario',
+    LISTA_USUARIOS = RotaAdmin + '/lista/usuarios',
 }

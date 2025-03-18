@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { Fira_Sans } from 'next/font/google'
 import './globals.css'
 import { TopMenu } from '@/components/top-menu'
+import { Toaster } from '@/components/ui/sonner'
 
 const firaSans = Fira_Sans({
     variable: '--font-fira-sans',
@@ -23,6 +24,7 @@ export default function RootLayout({
             <body className={`${firaSans.variable} antialiased`}>
                 <TopMenu />
                 {children}
+                <Toaster closeButton richColors theme="light" position="top-center" />
             </body>
         </html>
     )

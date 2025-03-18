@@ -1,13 +1,9 @@
 import { Rotas } from '@/enums/rotas'
-import {
-    NavigationMenu,
-    NavigationMenuContent,
-    NavigationMenuItem,
-    NavigationMenuLink,
-    NavigationMenuList,
-    NavigationMenuTrigger,
-} from './ui/navigation-menu'
 import Link from 'next/link'
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from './ui/dropdown-menu'
+import { Button } from './ui/button'
+import { ChevronDown } from 'lucide-react'
+import { cn } from '@/lib/utils'
 
 export function TopMenu() {
     const menus = [
@@ -24,43 +20,59 @@ export function TopMenu() {
                 { label: 'Do mês', href: Rotas.TOP10_MAIS_PERDIDO_MES },
             ],
         },
-        { label: 'Cadastro', href: Rotas.CADASTRO },
+        { label: 'Cadastro de item', href: Rotas.CADASTRO_ITENS },
+        { label: 'Cadastro de usuário', href: Rotas.CADASTRO_USUARIO },
+        {
+            label: 'Admin',
+            submenus: [
+                { label: 'Cadastro de usuário', href: Rotas.CADASTRO_USUARIO },
+                { label: 'Lista de usuário', href: Rotas.LISTA_USUARIOS },
+            ],
+        },
     ]
 
-    function renderMenu() {
-        return menus.map((menu, index) => (
-            <NavigationMenuItem key={index}>
-                {menu.submenus ? (
-                    <>
-                        <NavigationMenuTrigger className="bg-sidebar-primary">{menu.label}</NavigationMenuTrigger>
-                        <NavigationMenuContent>
-                            <ul className="w-64">
-                                {menu.submenus.map((submenu) => (
-                                    <li key={submenu.label}>
-                                        <NavigationMenuLink asChild>
-                                            <a className="rounded-md no-underline outline-none focus:shadow-md" href={submenu.href}>
-                                                <div className="font-medium">{submenu.label}</div>
-                                            </a>
-                                        </NavigationMenuLink>
-                                    </li>
-                                ))}
-                            </ul>
-                        </NavigationMenuContent>
-                    </>
-                ) : (
-                    <Link href={menu.href} legacyBehavior passHref>
-                        <NavigationMenuLink>{menu.label}</NavigationMenuLink>
-                    </Link>
-                )}
-            </NavigationMenuItem>
-        ))
-    }
-
     return (
-        <div className="bg-sidebar-primary text-gray-100 rounded-b-full p-2 px-10">
-            <NavigationMenu>
-                <NavigationMenuList>{renderMenu()}</NavigationMenuList>
-            </NavigationMenu>
+        <div className="flex items-center bg-sidebar-primary text-gray-100 rounded-b-full p-2 px-10 relative z-60">
+            <nav className="flex items-center space-x-4">
+                {menus.map((menu, index) =>
+                    menu.submenus ? (
+                        <DropdownMenu key={index}>
+                            <DropdownMenuTrigger asChild>
+                                <Button
+                                    variant="ghost"
+                                    className="text-gray-100 hover:text-gray-900 hover:bg-sidebar-accent flex items-center gap-1 hover:cursor-pointer"
+                                >
+                                    {menu.label}
+                                    <ChevronDown className="h-4 w-4" />
+                                </Button>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent className="mt-2">
+                                {menu.submenus.map((submenu, subIndex) => (
+                                    <DropdownMenuItem key={subIndex} asChild>
+                                        <Link
+                                            href={submenu.href}
+                                            className="cursor-pointer hover:bg-sidebar-accent focus:bg-sidebar-accent"
+                                        >
+                                            {submenu.label}
+                                        </Link>
+                                    </DropdownMenuItem>
+                                ))}
+                            </DropdownMenuContent>
+                        </DropdownMenu>
+                    ) : (
+                        <Link
+                            key={index}
+                            href={menu.href}
+                            className={cn(
+                                'text-gray-100 hover:text-gray-900 px-3 py-2 rounded-md',
+                                'hover:bg-sidebar-accent transition-colors',
+                            )}
+                        >
+                            {menu.label}
+                        </Link>
+                    ),
+                )}
+            </nav>
         </div>
     )
 }
