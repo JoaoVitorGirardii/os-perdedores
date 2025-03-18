@@ -1,5 +1,6 @@
 'use client'
 import { Loading } from '@/components/loading'
+import { MsgDefaultTabelaVazia } from '@/components/msg-default-tabela-vazia'
 import { Badge } from '@/components/ui/badge'
 import { Card } from '@/components/ui/card'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
@@ -58,6 +59,7 @@ export default function ListaUsuarios() {
                         ))}
                     </TableBody>
                 </Table>
+                {usuarios.length === 0 && <MsgDefaultTabelaVazia />}
             </Card>
         </div>
     )
