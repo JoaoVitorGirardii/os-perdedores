@@ -5,4 +5,6 @@ export type UsuarioDTO = {
     nome: string
     tipo: tipoUsuario
     ativo?: boolean
+    createdAt: Date
+    updatedAt: Date
 }

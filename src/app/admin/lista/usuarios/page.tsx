@@ -7,6 +7,7 @@ import { Card } from '@/components/ui/card'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
 import { UsuarioDTO } from '@/dto/usuario.dto'
 import { UsuarioService } from '@/server/usuario'
+import { format } from 'date-fns'
 import { Check } from 'lucide-react'
 import { useEffect, useState } from 'react'
 
@@ -60,6 +61,7 @@ export default function ListaUsuarios() {
                             <TableHead className="w-[300px] text-left">ID</TableHead>
                             <TableHead className="text-left">Nome</TableHead>
                             <TableHead className="text-center">Tipo</TableHead>
+                            <TableHead className="text-left">Dt. Cadastro</TableHead>
                             <TableHead className="text-left">Ativo</TableHead>
                         </TableRow>
                     </TableHeader>
@@ -76,6 +78,7 @@ export default function ListaUsuarios() {
                                         <Badge className="bg-green-500 hover:bg-green-600 gap-1">{item.tipo}</Badge>
                                     )}
                                 </TableCell>
+                                <TableCell className="text-left">{format(item.createdAt, 'dd/MM/yyyy')}</TableCell>
                                 <TableCell className="text-center">{item?.ativo ? <Check className="text-green-600" /> : null}</TableCell>
                             </TableRow>
                         ))}

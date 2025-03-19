@@ -21,7 +21,6 @@ export function TopMenu() {
             ],
         },
         { label: 'Cadastro de item', href: Rotas.CADASTRO_ITENS },
-        { label: 'Cadastro de usuário', href: Rotas.CADASTRO_USUARIO },
         {
             label: 'Admin',
             submenus: [

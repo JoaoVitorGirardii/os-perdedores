@@ -18,7 +18,7 @@ export default function CadastroUsuario() {
         e.preventDefault()
         try {
             setLoadingCreate(true)
-            await UsuarioService.Create({ nome, tipo })
+            await UsuarioService.Create({ nome, tipo, ativo: true })
             clear()
         } catch (error) {
             console.error(error)
@@ -59,7 +59,7 @@ export default function CadastroUsuario() {
                         </div>
 
                         <div className="flex justify-center">
-                            <Button className="min-w-xl" type="submit">
+                            <Button className="min-w-xl hover:cursor-pointer" type="submit">
                                 Cadastrar
                             </Button>
                         </div>

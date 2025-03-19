@@ -3,15 +3,18 @@ import { api } from './api'
 import { toast } from 'sonner'
 import { Paginacao } from '@/dto/paginacao.dto'
 import { QueryPaginacaoDTO } from '@/dto/queryPaginacao.dto'
+import { AxiosError } from 'axios'
 
 export const UsuarioService = {
-    async Create(newUser: UsuarioDTO): Promise<void> {
+    async Create(newUser: Omit<UsuarioDTO, 'id' | 'createdAt' | 'updatedAt'>): Promise<void> {
         try {
             const { data } = await api.post<UsuarioDTO>('/usuario', newUser)
             toast.success(`Novo usuário cadastrado " ${data.nome} "`)
         } catch (erro) {
             console.log(erro)
-            toast.error(JSON.stringify(erro))
+            if (erro instanceof AxiosError) {
+                toast.error(JSON.stringify(erro.response?.data.message))
+            }
         }
     },
 

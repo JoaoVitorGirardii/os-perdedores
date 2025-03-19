@@ -165,7 +165,7 @@ export default function ItemPerdidoCadastro() {
                             />
                         </label>
                         <div className="flex justify-center">
-                            <Button className="min-w-xl" type="submit">
+                            <Button className="min-w-xl hover:cursor-pointer" type="submit">
                                 Cadastrar
                             </Button>
                         </div>
