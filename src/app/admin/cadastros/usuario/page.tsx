@@ -1,5 +1,6 @@
 'use client'
 
+import { Loading } from '@/components/loading'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
@@ -11,15 +12,29 @@ import { ChangeEvent, useState } from 'react'
 export default function CadastroUsuario() {
     const [nome, setNome] = useState<string>('')
     const [tipo, setTipo] = useState<tipoUsuario>(tipoUsuario.ADMIN)
+    const [loadingCreate, setLoadingCreate] = useState<boolean>(false)
 
     async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault()
-        await UsuarioService.Create({ nome, tipo })
-        console.log({ nome, tipo })
+        try {
+            setLoadingCreate(true)
+            await UsuarioService.Create({ nome, tipo })
+            clear()
+        } catch (error) {
+            console.error(error)
+        } finally {
+            setLoadingCreate(false)
+        }
+    }
+
+    function clear() {
+        setNome('')
+        setTipo(tipoUsuario.ADMIN)
     }
 
     return (
         <main className="flex flex-col gap-4 p-8">
+            <Loading isLoading={loadingCreate} msgLoadin="Cadastrando usuário" />
             <h1 className="font-bold text-3xl">Cadastro de usuário</h1>
             <div className="flex justify-center w-full">
                 <Card className="w-full p-4">
