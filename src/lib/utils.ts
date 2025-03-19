@@ -13,3 +13,15 @@ export function formataValorInput(e: React.ChangeEvent<HTMLInputElement>): strin
     }).format(parseFloat(value) / 100)
     return formattedValue
 }
+
+export function converteValorStringEmNumero(currencyString: string) {
+    const num = currencyString
+        .replace(/R\$\s*/g, '') // Remove "R$" and any spaces after it
+        .replace(/\./g, '') // Remove dots
+        .replace(',', '.') // Replace virgula
+        .trim() // Remove espaços
+    if (Number(num)) {
+        return Number(num)
+    }
+    return 0
+}

@@ -21,20 +21,22 @@ export default function ListaUsuarios() {
     const [itemsPerPage, setItemsPerPage] = useState(10)
     const [indexItens, setIndexItens] = useState(0)
 
-    async function getUsuarios() {
-        const offSet = (currentPage - 1) * itemsPerPage
-
-        const users = await UsuarioService.GetUsuarios({ offSet, limit: itemsPerPage })
-        if (users) {
-            setUsuarios(users?.data)
-            setTotal(users.total)
-        }
-        setLoading(false)
-        setIndexItens(offSet + 1)
-    }
-
     useEffect(() => {
         setLoading(true)
+
+        // consulta usuarios
+        async function getUsuarios() {
+            const offSet = (currentPage - 1) * itemsPerPage
+
+            const users = await UsuarioService.GetUsuarios({ offSet, limit: itemsPerPage })
+            if (users) {
+                setUsuarios(users?.data)
+                setTotal(users.total)
+            }
+            setLoading(false)
+            setIndexItens(offSet + 1)
+        }
+
         getUsuarios()
     }, [currentPage, itemsPerPage])
 
