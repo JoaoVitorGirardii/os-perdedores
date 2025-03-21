@@ -1,16 +1,18 @@
 const RotaAdmin = '/admin'
+const RotaOsPerdedores = '/os-perdedores'
+
 export enum Rotas {
-    HOME = '/home',
-    ITENS_PERDIDOS = '/itens-perdidos',
+    HOME = RotaOsPerdedores + '/home',
+    ITENS_PERDIDOS = RotaOsPerdedores + '/itens-perdidos',
 
-    TOP10_PERDEDORES = '/top10/perdedores',
-    TOP10_ITENS_MAIS_PERDIDOS = '/top10/itens-mais-perdidos',
-    TOP10_MAIS_PERDIDO_MULHERES = '/top10/mulheres',
-    TOP10_MAIS_PERDIDO_HOMENS = '/top10/homens',
-    TOP10_MAIS_PERDIDO_SEMANA = '/top10/semana',
-    TOP10_MAIS_PERDIDO_MES = '/top10/mes',
+    TOP10_PERDEDORES = RotaOsPerdedores + '/top10/perdedores',
+    TOP10_ITENS_MAIS_PERDIDOS = RotaOsPerdedores + '/top10/itens-mais-perdidos',
+    TOP10_MAIS_PERDIDO_MULHERES = RotaOsPerdedores + '/top10/mulheres',
+    TOP10_MAIS_PERDIDO_HOMENS = RotaOsPerdedores + '/top10/homens',
+    TOP10_MAIS_PERDIDO_SEMANA = RotaOsPerdedores + '/top10/semana',
+    TOP10_MAIS_PERDIDO_MES = RotaOsPerdedores + '/top10/mes',
 
-    CADASTRO_ITENS = '/cadastro/item-perdido',
+    CADASTRO_ITENS = RotaOsPerdedores + '/cadastro/item-perdido',
 
     CADASTRO_USUARIO = RotaAdmin + '/cadastros/usuario',
     LISTA_USUARIOS = RotaAdmin + '/lista/usuarios',

@@ -95,15 +95,15 @@ export default function ItemPerdidoCadastro() {
                             </label>
                         </div>
                         <div>
-                            <label className="block">
+                            <label className="block w-[280px]">
                                 <span>Data da perca</span>
-                                <div>
+                                <div className="w-[280px]">
                                     <Popover>
                                         <PopoverTrigger asChild>
                                             <Button
                                                 variant={'outline'}
                                                 className={cn(
-                                                    'w-[280px] justify-start text-left font-normal',
+                                                    'w-[280px] justify-start text-left font-normal border-gray-400',
                                                     !date && 'text-muted-foreground',
                                                 )}
                                             >
