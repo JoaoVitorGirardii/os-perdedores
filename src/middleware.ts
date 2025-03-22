@@ -5,10 +5,15 @@ import { CookieNameENUM } from '@/enums/cookieName'
 import { userDTO } from './dto/login.dto'
 import { tipoUsuario } from './enums/tipoUsuario'
 
-// This function can be marked `async` if using `await` inside
 export function middleware(request: NextRequest) {
     const token = request.cookies.get(CookieNameENUM.TOKEN)?.value
-    const usuario = JSON.parse(request.cookies.get(CookieNameENUM.USER)?.value || '') as userDTO
+    const cookieUser = request.cookies.get(CookieNameENUM.USER)?.value
+
+    if (!cookieUser || !token) {
+        return NextResponse.redirect(new URL(Rotas.LOGIN, request.url))
+    }
+
+    const usuario = JSON.parse(cookieUser) as userDTO
 
     const caminhoAtual = request.nextUrl.pathname
     const rotasProtegidas = ['/admin']
