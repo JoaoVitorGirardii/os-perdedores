@@ -2,6 +2,7 @@ const RotaAdmin = '/admin'
 const RotaOsPerdedores = '/os-perdedores'
 
 export enum Rotas {
+    LOGIN = '/login',
     HOME = RotaOsPerdedores + '/home',
     ITENS_PERDIDOS = RotaOsPerdedores + '/itens-perdidos',
 

@@ -1,11 +1,13 @@
+'use client'
 import { Rotas } from '@/enums/rotas'
-import Link from 'next/link'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from './ui/dropdown-menu'
 import { Button } from './ui/button'
 import { ChevronDown } from 'lucide-react'
-import { cn } from '@/lib/utils'
+import { useRouter } from 'next/navigation'
 
 export function TopMenu() {
+    const router = useRouter()
+
     const menus = [
         { label: 'Home', href: Rotas.HOME },
         { label: 'Itens Perdidos', href: Rotas.ITENS_PERDIDOS },
@@ -48,27 +50,26 @@ export function TopMenu() {
                             <DropdownMenuContent className="mt-2">
                                 {menu.submenus.map((submenu, subIndex) => (
                                     <DropdownMenuItem key={subIndex} asChild>
-                                        <Link
-                                            href={submenu.href}
+                                        <Button
+                                            variant={'ghost'}
+                                            onClick={() => router.push(submenu.href)}
                                             className="cursor-pointer hover:bg-sidebar-accent focus:bg-sidebar-accent"
                                         >
                                             {submenu.label}
-                                        </Link>
+                                        </Button>
                                     </DropdownMenuItem>
                                 ))}
                             </DropdownMenuContent>
                         </DropdownMenu>
                     ) : (
-                        <Link
+                        <Button
                             key={index}
-                            href={menu.href}
-                            className={cn(
-                                'text-gray-100 hover:text-gray-900 px-3 py-2 rounded-md',
-                                'hover:bg-sidebar-accent transition-colors',
-                            )}
+                            variant={'ghost'}
+                            onClick={() => router.push(menu.href)}
+                            className="cursor-pointer hover:bg-sidebar-accent focus:bg-sidebar-accent"
                         >
                             {menu.label}
-                        </Link>
+                        </Button>
                     ),
                 )}
             </nav>
