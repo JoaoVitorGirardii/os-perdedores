@@ -10,6 +10,7 @@ import { useRouter } from 'next/navigation'
 import { obterCookie, salvarCookie } from '@/lib/cookies'
 import { CookieNameENUM } from '@/enums/cookieName'
 import { toast } from 'sonner'
+import Link from 'next/link'
 
 export default function Login() {
     const [user, setUser] = useState('')
@@ -109,6 +110,15 @@ export default function Login() {
                         <Button type="submit" className="w-full hover:cursor-pointer" disabled={isLoading}>
                             {isLoading ? 'Entrando...' : 'Entrar'}
                         </Button>
+
+                        <div className="w-full flex">
+                            <span className="text-xs text-center w-full">
+                                Ainda não possui conta? Cadastre-se{' '}
+                                <Link className="text-blue-600" href={Rotas.CRIAR_NOVA_CONTA}>
+                                    aqui.
+                                </Link>
+                            </span>
+                        </div>
                     </form>
                 </CardContent>
             </Card>

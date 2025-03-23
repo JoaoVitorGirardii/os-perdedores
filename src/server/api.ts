@@ -1,10 +1,13 @@
-// import { SessionStorageENUM } from '@/enums/sessionStorage'
 import { CookieNameENUM } from '@/enums/cookieName'
-import { obterCookie } from '@/lib/cookies'
+import { obterCookie, removerCookie } from '@/lib/cookies'
 import axios, { AxiosError } from 'axios'
 import { toast } from 'sonner'
+
 const instance = axios.create({
-    baseURL: 'http://localhost:3333/api',
+    baseURL: process.env.NEXT_PUBLIC_API_URL,
+    headers: {
+        ['x-app-source']: process.env.NEXT_PUBLIC_APP_SOURCE_VALUE,
+    },
 })
 
 // Adiciona um interceptor para todas as requisições
@@ -35,9 +38,11 @@ instance.interceptors.response.use(
             toast.error(error.response?.data.error)
 
             if (error.response?.status === 401) {
-                // removerCookie(CookieNameENUM.TOKEN)
-                // removerCookie(CookieNameENUM.USER)
+                removerCookie(CookieNameENUM.TOKEN)
+                removerCookie(CookieNameENUM.USER)
             }
+
+            return Promise.reject(error.response?.data)
         }
         // Any status codes that falls outside the range of 2xx cause this function to trigger
         // Do something with response error

@@ -15,6 +15,7 @@ export enum Rotas {
 
     CADASTRO_ITENS = RotaOsPerdedores + '/cadastro/item-perdido',
 
+    CRIAR_NOVA_CONTA = '/criar-conta',
     CADASTRO_USUARIO = RotaAdmin + '/cadastros/usuario',
     LISTA_USUARIOS = RotaAdmin + '/lista/usuarios',
 }
