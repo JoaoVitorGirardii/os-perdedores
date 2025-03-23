@@ -1,3 +1,4 @@
+import { Loading as LoadinComp } from '@/components/loading'
 export default function Loading() {
-    return <div className="h-32 w-full text-center bg-red-300">CARREGANDO</div>
+    return <LoadinComp isLoading />
 }
