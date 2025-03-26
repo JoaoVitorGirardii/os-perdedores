@@ -36,6 +36,7 @@ export default function ItensPerdidosPage() {
     const usuarioId = getUsuario().id
 
     useEffect(() => {
+        setLoading(true)
         const offSet = (currentPage - 1) * itemsPerPage
         async function getItens() {
             if (usuarioId) {
@@ -43,11 +44,12 @@ export default function ItensPerdidosPage() {
                     usuarioId,
                     paginacao: { offSet, limit: itemsPerPage },
                 })
-                console.log(dados)
+
                 if (dados) {
                     setItens(dados.data)
                     setTotal(dados.total)
                 }
+
                 setLoading(false)
                 setIndexItens(offSet + 1)
             }
@@ -91,8 +93,8 @@ export default function ItensPerdidosPage() {
                         </TableRow>
                     </TableBody>
                 </Table>
-                {itens && itens.itensPerdidos.length === 0 && <MsgDefaultTabelaVazia />}
-                {itens?.itensPerdidos.length !== 0 && (
+                {itens && !itens.itensPerdidos && <MsgDefaultTabelaVazia />}
+                {itens && itens.itensPerdidos && (
                     <TablePagination
                         currentPage={currentPage}
                         totalItems={total}
