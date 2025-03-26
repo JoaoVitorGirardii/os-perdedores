@@ -1,16 +1,31 @@
 'use client'
+
 import { Rotas } from '@/enums/rotas'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from './ui/dropdown-menu'
 import { Button } from './ui/button'
 import { ChevronDown, CircleUserRound, LogOut } from 'lucide-react'
 import { useRouter } from 'next/navigation'
-import { obterCookie, removerCookie } from '@/lib/cookies'
+import { getCookie, removerCookie } from '@/lib/cookies'
 import { CookieNameENUM } from '@/enums/cookieName'
 import { userDTO } from '@/dto/login.dto'
+import { useEffect, useState } from 'react'
 
 export function TopMenu() {
-    const user = JSON.parse(obterCookie(CookieNameENUM.USER) || '{}') as userDTO
     const router = useRouter()
+
+    // Add client-side only rendering
+    const [isClient, setIsClient] = useState(false)
+
+    useEffect(() => {
+        setIsClient(true)
+    }, [])
+
+    // Only render the menu on the client
+    if (!isClient) {
+        return null // Return null or a simple placeholder during SSR
+    }
+
+    const user = JSON.parse(getCookie(CookieNameENUM.USER) || '{}') as userDTO
 
     function logOut() {
         removerCookie(CookieNameENUM.TOKEN)

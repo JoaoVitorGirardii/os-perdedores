@@ -7,7 +7,7 @@ import { Rotas } from '@/enums/rotas'
 import { UsuarioService } from '@/server/usuario'
 import { useState, useRef, type FormEvent, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
-import { obterCookie, salvarCookie } from '@/lib/cookies'
+import { getCookie, salvarCookie } from '@/lib/cookies'
 import { CookieNameENUM } from '@/enums/cookieName'
 import { toast } from 'sonner'
 import Link from 'next/link'
@@ -65,8 +65,8 @@ export default function Login() {
     }
 
     useEffect(() => {
-        const cookieToken = obterCookie(CookieNameENUM.TOKEN)
-        const cookieUser = obterCookie(CookieNameENUM.USER)
+        const cookieToken = getCookie(CookieNameENUM.TOKEN)
+        const cookieUser = getCookie(CookieNameENUM.USER)
 
         // se o usuário já estiver logado vai para home
         if (cookieToken && cookieUser) {

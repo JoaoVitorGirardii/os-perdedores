@@ -7,7 +7,7 @@ import { LoginDTO, LoginResponseDTO } from '@/dto/login.dto'
 import { CreateUserDTO } from '@/dto/createUser.dto'
 
 export const UsuarioService = {
-    async CreateAdmin(newUser: CreateUserDTO): Promise<void> {
+    async CreateAdmin(newUser: Omit<CreateUserDTO, 'senha'>): Promise<void> {
         try {
             const { data } = await api.post<UsuarioDTO>('/usuario-admin', newUser)
             toast.success(`Novo usuário cadastrado " ${data.nome} "`)

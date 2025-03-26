@@ -1,5 +1,5 @@
 import { CookieNameENUM } from '@/enums/cookieName'
-import { obterCookie, removerCookie } from '@/lib/cookies'
+import { getCookie, removerCookie } from '@/lib/cookies'
 import axios, { AxiosError } from 'axios'
 import { toast } from 'sonner'
 
@@ -13,7 +13,7 @@ const instance = axios.create({
 // Adiciona um interceptor para todas as requisições
 instance.interceptors.request.use(
     (config) => {
-        const token = obterCookie(CookieNameENUM.TOKEN)
+        const token = getCookie(CookieNameENUM.TOKEN)
 
         // Se o token existir, adiciona ao cabeçalho de autorização
         if (token) {

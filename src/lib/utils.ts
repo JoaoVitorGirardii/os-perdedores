@@ -14,6 +14,14 @@ export function formataValorInput(e: React.ChangeEvent<HTMLInputElement>): strin
     return formattedValue
 }
 
+export function formataValor(e: number | undefined): string {
+    if (!e) return 'R$ 00,00'
+
+    const value = e.toLocaleString('pt-BR', { minimumFractionDigits: 2 })
+
+    return `R$ ${value}`
+}
+
 export function converteValorStringEmNumero(currencyString: string) {
     const num = currencyString
         .replace(/R\$\s*/g, '') // Remove "R$" and any spaces after it

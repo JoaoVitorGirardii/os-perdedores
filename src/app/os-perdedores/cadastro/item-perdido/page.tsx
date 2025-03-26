@@ -17,6 +17,7 @@ import { CategoriaDTO } from '@/dto/categoria.dto'
 import { ItemPerdidoService } from '@/server/itemPerdido'
 import { ItemPerdidoDTO } from '@/dto/itemPerdido.dto'
 import { toast } from 'sonner'
+import { getUsuario } from '@/lib/cookies'
 
 export default function ItemPerdidoCadastro() {
     const [date, setDate] = useState<Date>()
@@ -24,7 +25,6 @@ export default function ItemPerdidoCadastro() {
     const [categoriaId, setCategoriaId] = useState<string>()
     const [nome, setNome] = useState<string>()
     const [descricao, setDescricao] = useState<string>()
-
     const [categorias, setCategorias] = useState<CategoriaDTO[]>([])
 
     function formataValor(e: React.ChangeEvent<HTMLInputElement>) {
@@ -46,7 +46,7 @@ export default function ItemPerdidoCadastro() {
             categoriaId,
             nome,
             descricao,
-            usuarioId: '80985c76-9558-4b3a-ae76-76ed2f52bd7f',
+            usuarioId: getUsuario().id,
         }
 
         await ItemPerdidoService.Create(payload)

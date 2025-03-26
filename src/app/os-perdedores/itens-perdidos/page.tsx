@@ -1,12 +1,65 @@
-import { Badge } from '@/components/ui/badge'
+'use client'
+
+import { Loading } from '@/components/loading'
+import { MsgDefaultTabelaVazia } from '@/components/msg-default-tabela-vazia'
+import { TablePagination } from '@/components/tablePagination'
 import { Card } from '@/components/ui/card'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
-import { Award, Medal, Trophy } from 'lucide-react'
+import { ItensPerdidosUsuarioDTO } from '@/dto/response/itensPerdidoUsuario.dto'
+import { getUsuario } from '@/lib/cookies'
+import { formataValor } from '@/lib/utils'
+import { ItemPerdidoService } from '@/server/itemPerdido'
+import { format } from 'date-fns'
+import { useEffect, useState } from 'react'
 
 export default function ItensPerdidosPage() {
+    const [itens, setItens] = useState<ItensPerdidosUsuarioDTO | null>()
+    const [loading, setLoading] = useState(false)
+
+    // paginacao
+    const [total, setTotal] = useState<number>(0)
+    const [currentPage, setCurrentPage] = useState(1)
+    const [itemsPerPage, setItemsPerPage] = useState(10)
+    const [indexItens, setIndexItens] = useState(0)
+
+    // paginação
+    const handlePageChange = (page: number) => {
+        setCurrentPage(page)
+    }
+
+    // paginação
+    const handleItemsPerPageChange = (newItemsPerPage: number) => {
+        setItemsPerPage(newItemsPerPage)
+        setCurrentPage(1)
+    }
+
+    const usuarioId = getUsuario().id
+
+    useEffect(() => {
+        const offSet = (currentPage - 1) * itemsPerPage
+        async function getItens() {
+            if (usuarioId) {
+                const dados = await ItemPerdidoService.GetItensByUsuarioId({
+                    usuarioId,
+                    paginacao: { offSet, limit: itemsPerPage },
+                })
+                console.log(dados)
+                if (dados) {
+                    setItens(dados.data)
+                    setTotal(dados.total)
+                }
+                setLoading(false)
+                setIndexItens(offSet + 1)
+            }
+        }
+
+        getItens()
+    }, [currentPage, itemsPerPage, usuarioId])
+
     return (
         <div className="p-8 w-full">
-            <h1 className="text-3xl font-bold mb-6">Seus itens perdidos</h1>
+            <Loading isLoading={loading} />
+            <h1 className="text-3xl font-bold mb-6">Meus itens perdidos</h1>
 
             <Card className="w-full">
                 <Table className="w-full">
@@ -14,78 +67,41 @@ export default function ItensPerdidosPage() {
                         <TableRow>
                             <TableHead className="w-[80px] text-center">Posição</TableHead>
                             <TableHead>Nome</TableHead>
-                            <TableHead className="text-right">Quantidade</TableHead>
                             <TableHead className="text-right">Valor</TableHead>
                             <TableHead className="text-right">Descrição</TableHead>
                             <TableHead className="text-right">Data</TableHead>
                         </TableRow>
                     </TableHeader>
                     <TableBody>
-                        {leaderboardData.map((item, index) => (
-                            <TableRow key={index} className={index < 3 ? 'bg-muted/50' : ''}>
-                                <TableCell className="text-center">
-                                    {index === 0 ? (
-                                        <Badge className="bg-yellow-500 hover:bg-yellow-600 gap-1">
-                                            <Trophy className="h-4 w-4" />
-                                            1º
-                                        </Badge>
-                                    ) : index === 1 ? (
-                                        <Badge className="bg-gray-400 hover:bg-gray-500 gap-1">
-                                            <Medal className="h-4 w-4" />
-                                            2º
-                                        </Badge>
-                                    ) : index === 2 ? (
-                                        <Badge className="bg-amber-600 hover:bg-amber-700 gap-1">
-                                            <Award className="h-4 w-4" />
-                                            3º
-                                        </Badge>
-                                    ) : (
-                                        <span>{index + 1}º</span>
-                                    )}
-                                </TableCell>
+                        {itens?.itensPerdidos?.map((item, index) => (
+                            <TableRow key={index}>
+                                <TableCell className="text-center">{index + indexItens}º</TableCell>
                                 <TableCell className="font-medium">{item.nome}</TableCell>
-                                <TableCell className="text-right">{item.quantidade}</TableCell>
-                                <TableCell className="text-right">
-                                    R$ {item.valor.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
-                                </TableCell>
+                                <TableCell className="text-right">{formataValor(item.valor)}</TableCell>
                                 <TableCell className="text-right">{item.descricao}</TableCell>
-                                <TableCell className="text-right">{item.data}</TableCell>
+                                <TableCell className="text-right">{format(item.dataPerca, 'dd/MM/yyyy')}</TableCell>
                             </TableRow>
                         ))}
+                        <TableRow>
+                            <TableCell className="text-center font-bold"></TableCell>
+                            <TableCell className="font-medium"> </TableCell>
+                            <TableCell className="text-right font-bold">{formataValor(itens?.totalDeFinanceiro)}</TableCell>
+                            <TableCell className="text-right"> </TableCell>
+                            <TableCell className="text-right"> </TableCell>
+                        </TableRow>
                     </TableBody>
                 </Table>
+                {itens && itens.itensPerdidos.length === 0 && <MsgDefaultTabelaVazia />}
+                {itens?.itensPerdidos.length !== 0 && (
+                    <TablePagination
+                        currentPage={currentPage}
+                        totalItems={total}
+                        itemsPerPage={itemsPerPage}
+                        onPageChange={handlePageChange}
+                        onItemsPerPageChange={handleItemsPerPageChange}
+                    />
+                )}
             </Card>
         </div>
     )
 }
-
-const leaderboardData = [
-    {
-        nome: 'Camisa',
-        quantidade: 5,
-        valor: 50.8,
-        descricao: 'Camisa de manga longa',
-        data: '2022-01-01',
-    },
-    {
-        nome: 'Meia',
-        quantidade: 3,
-        valor: 510.8,
-        descricao: 'MEIA DE ALGODÃO',
-        data: '2022-01-01',
-    },
-    {
-        nome: 'Granpo de roupa',
-        quantidade: 2,
-        valor: 50.8,
-        descricao: 'Alguém perdeu um grampo de roupa',
-        data: '2022-01-01',
-    },
-    {
-        nome: 'Mochila',
-        quantidade: 1,
-        valor: 250.8,
-        descricao: 'Anda perdendo mochila por aí?',
-        data: '2022-01-01',
-    },
-]

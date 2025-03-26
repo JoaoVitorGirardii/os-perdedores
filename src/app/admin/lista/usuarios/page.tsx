@@ -15,11 +15,22 @@ export default function ListaUsuarios() {
     const [usuarios, setUsuarios] = useState<UsuarioDTO[]>([])
     const [loading, setLoading] = useState<boolean>(false)
 
-    // paginacao
+    // paginação
     const [total, setTotal] = useState<number>(0)
     const [currentPage, setCurrentPage] = useState(1)
     const [itemsPerPage, setItemsPerPage] = useState(10)
     const [indexItens, setIndexItens] = useState(0)
+
+    // paginação
+    const handlePageChange = (page: number) => {
+        setCurrentPage(page)
+    }
+
+    // paginação
+    const handleItemsPerPageChange = (newItemsPerPage: number) => {
+        setItemsPerPage(newItemsPerPage)
+        setCurrentPage(1)
+    }
 
     useEffect(() => {
         setLoading(true)
@@ -39,15 +50,6 @@ export default function ListaUsuarios() {
 
         getUsuarios()
     }, [currentPage, itemsPerPage])
-
-    const handlePageChange = (page: number) => {
-        setCurrentPage(page)
-    }
-
-    const handleItemsPerPageChange = (newItemsPerPage: number) => {
-        setItemsPerPage(newItemsPerPage)
-        setCurrentPage(1)
-    }
 
     return (
         <div className="p-8 w-full">
