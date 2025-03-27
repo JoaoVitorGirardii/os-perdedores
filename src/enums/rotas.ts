@@ -1,17 +1,20 @@
+import { ListaTopDez } from './listaTopDez'
+
 const RotaAdmin = '/admin'
 const RotaOsPerdedores = '/os-perdedores'
+const RotaTopDez = RotaOsPerdedores + '/top10/'
 
 export enum Rotas {
     LOGIN = '/',
     HOME = RotaOsPerdedores + '/home',
     ITENS_PERDIDOS = RotaOsPerdedores + '/itens-perdidos',
 
-    TOP10_PERDEDORES = RotaOsPerdedores + '/top10/perdedores',
-    TOP10_ITENS_MAIS_PERDIDOS = RotaOsPerdedores + '/top10/itens-mais-perdidos',
-    TOP10_MAIS_PERDIDO_MULHERES = RotaOsPerdedores + '/top10/mulheres',
-    TOP10_MAIS_PERDIDO_HOMENS = RotaOsPerdedores + '/top10/homens',
-    TOP10_MAIS_PERDIDO_SEMANA = RotaOsPerdedores + '/top10/semana',
-    TOP10_MAIS_PERDIDO_MES = RotaOsPerdedores + '/top10/mes',
+    TOP10_PERDEDORES = RotaTopDez + '/perdedores',
+    TOP10_ITENS_MAIS_PERDIDOS = RotaTopDez + ListaTopDez.ITENS_MAIS_PERDIDOS,
+    TOP10_MAIS_PERDIDO_MULHERES = RotaTopDez + ListaTopDez.ITENS_MAIS_PERDIDOS_MULHERES,
+    TOP10_MAIS_PERDIDO_HOMENS = RotaTopDez + ListaTopDez.ITENS_MAIS_PERDIDOS_HOMEM,
+    TOP10_MAIS_PERDIDO_SEMANA = RotaTopDez + ListaTopDez.ITENS_MAIS_PERDIDOS_SEMANA,
+    TOP10_MAIS_PERDIDO_MES = RotaTopDez + ListaTopDez.ITENS_MAIS_PERDIDOS_MES,
 
     CADASTRO_ITENS = RotaOsPerdedores + '/cadastro/item-perdido',
 

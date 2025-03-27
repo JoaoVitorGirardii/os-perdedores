@@ -65,6 +65,7 @@ export default function Login() {
     }
 
     useEffect(() => {
+        setIsLoading(true)
         const cookieToken = getCookie(CookieNameENUM.TOKEN)
         const cookieUser = getCookie(CookieNameENUM.USER)
 
@@ -72,7 +73,8 @@ export default function Login() {
         if (cookieToken && cookieUser) {
             router.push(Rotas.HOME)
         }
-    })
+        setIsLoading(false)
+    }, [])
 
     return (
         <div className="flex w-full h-dvh items-center justify-center bg-gray-50">

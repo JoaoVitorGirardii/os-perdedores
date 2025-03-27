@@ -21,8 +21,8 @@ export default function Top10Perdedores() {
 
     return (
         <div className="p-8 w-full">
-            <h1 className="text-3xl font-bold mb-6">TOP 10 Perdedores</h1>
-
+            <h1 className="text-3xl font-bold">TOP 10</h1>
+            <h2 className="mb-6"> Perdedores</h2>
             <Card className="w-full">
                 <Table className="w-full">
                     <TableHeader>
