@@ -3,7 +3,7 @@ import { CookieNameENUM } from '@/enums/cookieName'
 import Cookies from 'js-cookie'
 
 export function salvarCookie(nome: string, valor: string) {
-    Cookies.set(nome, valor, { expires: 10 }) // Expires em 10 dia
+    Cookies.set(nome, valor, { expires: 10, secure: true }) // Expires em 10 dia
 }
 
 export function getCookie(nome: string) {
