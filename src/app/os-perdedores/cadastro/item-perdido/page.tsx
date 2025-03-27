@@ -35,7 +35,7 @@ export default function ItemPerdidoCadastro() {
     async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault()
 
-        if (!date || !valor || !categoriaId || !nome || !descricao || (valor && Number(valor) === 0)) {
+        if (!date || !valor || !categoriaId || !nome || (valor && Number(valor) === 0)) {
             toast.error('Preencha todos os campos')
             return
         }
@@ -45,7 +45,7 @@ export default function ItemPerdidoCadastro() {
             valor: converteValorStringEmNumero(valor),
             categoriaId,
             nome,
-            descricao,
+            descricao: descricao ?? '',
             usuarioId: getUsuario().id,
         }
 
@@ -119,9 +119,10 @@ export default function ItemPerdidoCadastro() {
                             </label>
                         </div>
                         <label>
-                            <span>Descrição</span>
+                            <span>Descrição(Opcional)</span>
                             <Textarea
                                 maxLength={200}
+                                placeholder="Descreva aqui algo sobre o item perdido..."
                                 onChange={(event: ChangeEvent<HTMLTextAreaElement>) => setDescricao(event.target.value)}
                             />
                         </label>

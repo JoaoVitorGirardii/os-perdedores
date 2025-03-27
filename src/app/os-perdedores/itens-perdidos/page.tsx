@@ -15,6 +15,7 @@ import { useEffect, useState } from 'react'
 export default function ItensPerdidosPage() {
     const [itens, setItens] = useState<ItensPerdidosUsuarioDTO | null>()
     const [loading, setLoading] = useState(false)
+    const [listaVazia, setListaVazia] = useState(true)
 
     // paginacao
     const [total, setTotal] = useState<number>(0)
@@ -48,6 +49,12 @@ export default function ItensPerdidosPage() {
                 if (dados) {
                     setItens(dados.data)
                     setTotal(dados.total)
+                }
+
+                if (dados?.data?.itensPerdidos && dados.data?.itensPerdidos.length > 0) {
+                    setListaVazia(false)
+                } else {
+                    setListaVazia(true)
                 }
 
                 setLoading(false)
@@ -84,17 +91,19 @@ export default function ItensPerdidosPage() {
                                 <TableCell className="text-right">{format(item.dataPerca, 'dd/MM/yyyy')}</TableCell>
                             </TableRow>
                         ))}
-                        <TableRow>
-                            <TableCell className="text-center font-bold"></TableCell>
-                            <TableCell className="font-medium"> </TableCell>
-                            <TableCell className="text-right font-bold">{formataValor(itens?.totalDeFinanceiro)}</TableCell>
-                            <TableCell className="text-right"> </TableCell>
-                            <TableCell className="text-right"> </TableCell>
-                        </TableRow>
+                        {!listaVazia && (
+                            <TableRow>
+                                <TableCell className="text-center font-bold"></TableCell>
+                                <TableCell className="font-medium"> </TableCell>
+                                <TableCell className="text-right font-bold">{formataValor(itens?.totalDeFinanceiro)}</TableCell>
+                                <TableCell className="text-right"> </TableCell>
+                                <TableCell className="text-right"> </TableCell>
+                            </TableRow>
+                        )}
                     </TableBody>
                 </Table>
-                {itens && !itens.itensPerdidos && <MsgDefaultTabelaVazia />}
-                {itens && itens.itensPerdidos && (
+                {listaVazia && <MsgDefaultTabelaVazia />}
+                {!listaVazia && (
                     <TablePagination
                         currentPage={currentPage}
                         totalItems={total}

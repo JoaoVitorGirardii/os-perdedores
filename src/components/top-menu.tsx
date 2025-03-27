@@ -39,12 +39,12 @@ export function TopMenu() {
         {
             label: 'Top 10',
             submenus: [
-                { label: 'Maiores perdedores', href: Rotas.TOP10_PERDEDORES },
-                { label: 'Itens mais perdidos', href: Rotas.TOP10_ITENS_MAIS_PERDIDOS },
-                { label: 'Itens mais perdidos HOMENS', href: Rotas.TOP10_MAIS_PERDIDO_HOMENS },
-                { label: 'Itens mais perdidos MULHERES', href: Rotas.TOP10_MAIS_PERDIDO_MULHERES },
-                { label: 'Da semana', href: Rotas.TOP10_MAIS_PERDIDO_SEMANA },
-                { label: 'Do mês', href: Rotas.TOP10_MAIS_PERDIDO_MES },
+                { label: 'Maiores perdedores', href: Rotas.TOP10_PERDEDORES, disabled: false },
+                { label: 'Itens mais perdidos', href: Rotas.TOP10_ITENS_MAIS_PERDIDOS, disabled: false },
+                { label: 'Itens mais perdidos HOMENS', href: Rotas.TOP10_MAIS_PERDIDO_HOMENS, disabled: false },
+                { label: 'Itens mais perdidos MULHERES', href: Rotas.TOP10_MAIS_PERDIDO_MULHERES, disabled: false },
+                { label: 'Da semana', href: Rotas.TOP10_MAIS_PERDIDO_SEMANA, disabled: true },
+                { label: 'Do mês', href: Rotas.TOP10_MAIS_PERDIDO_MES, disabled: true },
             ],
         },
         { label: 'Cadastro de item', href: Rotas.CADASTRO_ITENS },
@@ -52,8 +52,8 @@ export function TopMenu() {
             label: 'Admin',
             permission: ['ADMIN'],
             submenus: [
-                { label: 'Cadastro de usuário', href: Rotas.CADASTRO_USUARIO },
-                { label: 'Lista de usuário', href: Rotas.LISTA_USUARIOS },
+                { label: 'Cadastro de usuário', href: Rotas.CADASTRO_USUARIO, disabled: false },
+                { label: 'Lista de usuário', href: Rotas.LISTA_USUARIOS, disabled: false },
             ],
         },
     ]
@@ -81,6 +81,7 @@ export function TopMenu() {
                                         <DropdownMenuItem key={subIndex} asChild>
                                             <Button
                                                 variant={'ghost'}
+                                                disabled={submenu.disabled}
                                                 onClick={() => router.push(submenu.href)}
                                                 className="cursor-pointer hover:bg-sidebar-accent focus:bg-sidebar-accent w-full justify-start"
                                             >

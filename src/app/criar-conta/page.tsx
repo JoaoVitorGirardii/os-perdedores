@@ -4,6 +4,8 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Checkbox } from '@/components/ui/checkbox'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
+import { SEXO } from '@/consts/consts'
 import { Rotas } from '@/enums/rotas'
 import { UsuarioService } from '@/server/usuario'
 import { useRouter } from 'next/navigation'
@@ -13,6 +15,7 @@ import { toast } from 'sonner'
 export default function CriarConta() {
     const [name, setName] = useState('')
     const [user, setUser] = useState('')
+    const [sexo, setSexo] = useState('')
     const [password, setPassword] = useState('')
     const [confirmPassword, setConfirmPassword] = useState('')
     const [isLoading, setIsLoading] = useState(false)
@@ -45,6 +48,12 @@ export default function CriarConta() {
             return
         }
 
+        if (!sexo) {
+            toast.warning('Selecione um sexo!')
+            userInputRef.current?.focus()
+            return
+        }
+
         if (!senha) {
             toast.warning('Informe a senha!')
             passwordInputRef.current?.focus()
@@ -69,6 +78,7 @@ export default function CriarConta() {
             nome,
             usuario,
             senha,
+            sexo,
         }
 
         try {
@@ -115,6 +125,21 @@ export default function CriarConta() {
                                 disabled={isLoading}
                                 autoFocus
                             />
+                        </div>
+                        <div className="space-y-2">
+                            <Label htmlFor="password">Sexo</Label>
+                            <Select onValueChange={setSexo}>
+                                <SelectTrigger className="w-full">
+                                    <SelectValue placeholder="Selecione um sexo" />
+                                </SelectTrigger>
+                                <SelectContent>
+                                    {SEXO.map((x) => (
+                                        <SelectItem key={x} value={x}>
+                                            {x}
+                                        </SelectItem>
+                                    ))}
+                                </SelectContent>
+                            </Select>
                         </div>
                         <div className="space-y-2">
                             <Label htmlFor="password">Senha</Label>
