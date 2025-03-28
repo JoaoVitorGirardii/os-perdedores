@@ -62,7 +62,7 @@ export default function ItemPerdidoCadastro() {
     }, [])
 
     return (
-        <main className="flex flex-col gap-4 p-8">
+        <main className="flex flex-col gap-4 px-8 py-4">
             <h1 className="font-bold text-3xl">Item perdido</h1>
             <div className="flex justify-center w-full">
                 <Card className="w-full p-4">

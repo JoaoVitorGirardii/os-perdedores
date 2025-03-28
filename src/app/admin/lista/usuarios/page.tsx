@@ -52,10 +52,10 @@ export default function ListaUsuarios() {
     }, [currentPage, itemsPerPage])
 
     return (
-        <div className="p-8 w-full">
+        <div className="px-8 py-4 w-full">
             <Loading isLoading={loading} />
 
-            <h1 className="text-3xl font-bold mb-6">Usuários</h1>
+            <h1 className="text-3xl font-bold mb-2">Usuários</h1>
 
             <Card className="w-full">
                 <Table className="w-full">

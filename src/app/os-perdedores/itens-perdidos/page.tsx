@@ -66,9 +66,9 @@ export default function ItensPerdidosPage() {
     }, [currentPage, itemsPerPage, usuarioId])
 
     return (
-        <div className="p-8 w-full">
+        <div className="px-8 py-4 w-full">
             <Loading isLoading={loading} />
-            <h1 className="text-3xl font-bold mb-6">Meus itens perdidos</h1>
+            <h1 className="text-3xl font-bold mb-2">Meus itens perdidos</h1>
 
             <Card className="w-full">
                 <Table className="w-full">

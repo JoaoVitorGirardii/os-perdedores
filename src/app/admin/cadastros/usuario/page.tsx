@@ -28,7 +28,7 @@ export default function CadastroUsuario() {
     }
 
     return (
-        <main className="flex flex-col gap-4 p-8">
+        <main className="flex flex-col gap-4 px-8 py-4">
             <Loading isLoading={loadingCreate} msgLoadin="Cadastrando usuário" />
             <h1 className="font-bold text-3xl">Cadastro de usuário admin</h1>
             <div className="flex justify-center w-full">

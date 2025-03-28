@@ -1,4 +1,5 @@
 'use client'
+import { Loading } from '@/components/loading'
 import { Badge } from '@/components/ui/badge'
 import { Card } from '@/components/ui/card'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
@@ -10,40 +11,61 @@ import { use, useEffect, useState } from 'react'
 
 export default function PageListaTopDez({ params }: { params: Promise<{ slug: ListaTopDez }> }) {
     const [listItens, setListItens] = useState<TopDezDTO | null>()
+    const [configPage, setConfigPage] = useState({
+        titulo: '',
+        mulheres: false,
+        homens: false,
+    })
+    const [loading, setLoading] = useState(false)
     const { slug } = use(params)
-    const [tituloPagina, setTituloPagina] = useState('')
 
     async function getItens() {
-        const data = await ItemPerdidoService.TopDez(slug)
-        setListItens(data)
+        try {
+            setLoading(true)
+            const data = await ItemPerdidoService.TopDez(slug)
+            setListItens(data)
+        } finally {
+            setLoading(false)
+        }
     }
 
-    function getTituloTopDez() {
+    function getConfigVisualizacao() {
         switch (slug) {
+            case ListaTopDez.TOP_DEZ_PERDEDORES:
+                setConfigPage({ ...configPage, titulo: 'Perdedores' })
+                break
             case ListaTopDez.ITENS_MAIS_PERDIDOS_HOMEM:
-                return 'Itens que homens mais perdem'
+                setConfigPage({ ...configPage, titulo: 'Itens que homens mais perdem', homens: true })
+                break
             case ListaTopDez.ITENS_MAIS_PERDIDOS_MULHERES:
-                return 'Itens que as mulheres mais perdem'
+                setConfigPage({ ...configPage, titulo: 'Itens que as mulheres mais perdem', mulheres: true })
+                break
             case ListaTopDez.ITENS_MAIS_PERDIDOS_MES:
-                return 'Itens mais perdidos do mês'
+                setConfigPage({ ...configPage, titulo: 'Itens mais perdidos do mês', homens: true, mulheres: true })
+                break
             case ListaTopDez.ITENS_MAIS_PERDIDOS_SEMANA:
-                return 'Itens mais perdidos da semana'
+                setConfigPage({ ...configPage, titulo: 'Itens mais perdidos da semana', homens: true, mulheres: true })
+                break
             case ListaTopDez.ITENS_MAIS_PERDIDOS:
-                return 'Itens mais perdidos'
+                setConfigPage({ ...configPage, titulo: 'Itens mais perdidos', homens: true, mulheres: true })
+                break
             default:
-                return ''
+                setConfigPage({ ...configPage, titulo: '' })
+                break
         }
     }
 
     useEffect(() => {
         getItens()
-        setTituloPagina(getTituloTopDez())
+        getConfigVisualizacao()
     }, [])
 
     return (
-        <div className="p-8 w-full">
+        <div className="px-8 py-4 w-full">
+            <Loading isLoading={loading} />
+
             <h1 className="text-3xl font-bold">TOP 10</h1>
-            <h2 className="mb-6">{tituloPagina}</h2>
+            <h2 className="mb-2">{configPage.titulo}</h2>
 
             <Card className="w-full">
                 <Table className="w-full">
@@ -53,7 +75,8 @@ export default function PageListaTopDez({ params }: { params: Promise<{ slug: Li
                             <TableHead>Nome</TableHead>
                             <TableHead className="text-right">Quantidade</TableHead>
                             <TableHead className="text-right">Valor</TableHead>
-                            <TableHead className="text-right">Qtd Homens</TableHead>
+                            {configPage.homens && <TableHead className="text-right">Qtd Homens</TableHead>}
+                            {configPage.mulheres && <TableHead className="text-right">Qtd Mulheres</TableHead>}
                         </TableRow>
                     </TableHeader>
                     <TableBody>
@@ -84,7 +107,8 @@ export default function PageListaTopDez({ params }: { params: Promise<{ slug: Li
                                 <TableCell className="text-right">
                                     R$ {item.valorTotal.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
                                 </TableCell>
-                                <TableCell className="text-right">{item.totalMasculino}</TableCell>
+                                {configPage.homens && <TableCell className="text-right">{item.totalMasculino}</TableCell>}
+                                {configPage.mulheres && <TableCell className="text-right">{item.totalFeminino}</TableCell>}
                             </TableRow>
                         ))}
                     </TableBody>

@@ -9,7 +9,7 @@ export enum Rotas {
     HOME = RotaOsPerdedores + '/home',
     ITENS_PERDIDOS = RotaOsPerdedores + '/itens-perdidos',
 
-    TOP10_PERDEDORES = RotaTopDez + '/perdedores',
+    TOP10_PERDEDORES = RotaTopDez + ListaTopDez.TOP_DEZ_PERDEDORES,
     TOP10_ITENS_MAIS_PERDIDOS = RotaTopDez + ListaTopDez.ITENS_MAIS_PERDIDOS,
     TOP10_MAIS_PERDIDO_MULHERES = RotaTopDez + ListaTopDez.ITENS_MAIS_PERDIDOS_MULHERES,
     TOP10_MAIS_PERDIDO_HOMENS = RotaTopDez + ListaTopDez.ITENS_MAIS_PERDIDOS_HOMEM,

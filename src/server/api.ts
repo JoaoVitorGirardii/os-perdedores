@@ -34,6 +34,7 @@ instance.interceptors.response.use(
         return response
     },
     function (error) {
+        console.error('ERRO NO AXIOS OU NA API: ', error)
         if (error instanceof AxiosError) {
             toast.error(error.response?.data.error)
 
