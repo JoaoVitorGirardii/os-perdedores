@@ -12,14 +12,15 @@ import { ChangeEvent, useState } from 'react'
 export default function CadastroUsuario() {
     const [nome, setNome] = useState('')
     const [usuario, setUsuario] = useState('')
-    const [loadingCreate, setLoadingCreate] = useState<boolean>(false)
     const [sexo, setSexo] = useState('')
+    const [senha, setSenha] = useState('')
+    const [loadingCreate, setLoadingCreate] = useState<boolean>(false)
 
     async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault()
         try {
             setLoadingCreate(true)
-            await UsuarioService.CreateAdmin({ nome, usuario, sexo })
+            await UsuarioService.CreateAdmin({ nome, usuario, sexo, senha })
         } catch (error) {
             console.error(error)
         } finally {
@@ -43,6 +44,8 @@ export default function CadastroUsuario() {
                                 <span>Usuário</span>
                                 <Input type="text" onChange={(event: ChangeEvent<HTMLInputElement>) => setUsuario(event.target.value)} />
                             </label>
+                        </div>
+                        <div className="flex gap-4">
                             <label className="w-full">
                                 <span>Sexo</span>
                                 <Select onValueChange={setSexo}>
@@ -57,6 +60,10 @@ export default function CadastroUsuario() {
                                         ))}
                                     </SelectContent>
                                 </Select>
+                            </label>
+                            <label className="w-full">
+                                <span>Senha</span>
+                                <Input type="text" onChange={(event: ChangeEvent<HTMLInputElement>) => setSenha(event.target.value)} />
                             </label>
                         </div>
 

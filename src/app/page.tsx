@@ -107,6 +107,7 @@ export default function Login() {
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
                                 disabled={isLoading}
+                                onKeyDown={(e) => e.key === 'Enter' && handleLogin()}
                             />
                         </div>
                         <Button type="submit" className="w-full hover:cursor-pointer" disabled={isLoading}>

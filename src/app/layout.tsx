@@ -26,6 +26,7 @@ export default function RootLayout({
             <body className={`${firaSans.variable} antialiased`}>
                 {children}
                 <Toaster closeButton richColors theme="light" position="top-center" />
+                <div className="fixed bottom-1 text-center w-full font-mono text-xs">Desenvolvido por: João Vitor Girardi</div>
             </body>
         </html>
     )
